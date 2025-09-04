@@ -1,41 +1,23 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, test} from '@env';
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
+// Configuración de tu proyecto Firebase
 const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID    
+  apiKey: "AIzaSyBVZVP3v3dGcmq2x05Wi40K62ILdHVduac",
+  authDomain: "evalluacion-firebase-parejas.firebaseapp.com",
+  projectId: "evalluacion-firebase-parejas",
+  storageBucket: "evalluacion-firebase-parejas.appspot.com",
+  messagingSenderId: "987482833647",
+  appId: "1:987482833647:web:7c0ef3a357b10dade8511a"
 };
-console.log(test)
-console.log("Valor de configuracion", firebaseConfig);
 
-// Initialize Firebase
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-if (app) {
-  console.log('Firebase initialized successfully');
-} else {
-  console.log('Firebase initialization failed');
-}
 
+// Inicializar servicios
+const auth = getAuth(app);
 const database = getFirestore(app);
-if (database) {
-  console.log('Firestore initialized correctly');
-} else {
-  console.log('Firestore initialization failed');
-}
-/*
-const storage = getStorage(app);
 
-if (storage) {
-  console.log('storage initialized correctly');
-} else {
-  console.log('storage initialization failed');
-}
-*/
-//export { database,storage };
-export { database };
+// Exportar para usar en toda la app
+export { auth, database };

@@ -19,12 +19,12 @@ const EditarPerfil = ({ route, navigation }) => {
             const ref = doc(database, 'usuarios', perfil.id);
             await updateDoc(ref, form);
 
-            Alert.alert('Perfil actualizado', 'Cambios guardados, papi chulo 😎', [
+            Alert.alert('Perfil actualizado', 'Cambios guardados', [
                 { text: 'OK', onPress: () => navigation.goBack() },
             ]);
         } catch (error) {
             console.error('Error actualizando perfil', error);
-            Alert.alert('Error', 'No se pudo actualizar el perfil, papi.');
+            Alert.alert('Error', 'No se pudo actualizar el perfil.');
         }
     };
 

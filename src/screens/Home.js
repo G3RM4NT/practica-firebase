@@ -28,7 +28,7 @@ const HomePerfil = ({ navigation }) => {
 
     const goToEdit = (id) => {
         const perfil = perfiles.find((p) => p.id === id);
-        navigation.navigate('EditarPerfil', { perfil });
+        navigation.navigate('Edit', { perfil });
     };
 
     const renderItem = ({ item }) => (
@@ -45,7 +45,6 @@ const HomePerfil = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Perfil</Text>
 
             {perfiles.length !== 0 ? (
                 <FlatList
@@ -59,7 +58,7 @@ const HomePerfil = ({ navigation }) => {
             )}
 
             <TouchableOpacity style={styles.button} onPress={goToAdd}>
-                <Text style={styles.buttonText}>Agregar Perfil</Text>
+                <Text style={styles.buttonText}>Cerrar Sesión</Text>
             </TouchableOpacity>
         </View>
     );

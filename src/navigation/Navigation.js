@@ -11,7 +11,7 @@ const Navigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={Home} options={{title:'Home'}} />
+                <Stack.Screen name="Home" component={Home} options={{title:'Mi perfil'}} />
                 <Stack.Screen name="Add" component={Add} 
                 options={{presentation:'modal', title:'Registrar usuario'}}/>
                 <Stack.Screen name="Edit" component={Edit} options={{title:'Editar datos'}}/>
