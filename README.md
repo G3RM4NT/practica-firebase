@@ -21,6 +21,7 @@ Este proyecto utiliza las siguientes dependencias:
 - `react-native-safe-area-context`: ^5.6.1
 - `react-native-screens`: ^4.15.3
 
-Video demostrativo:
+Video demostrativo - APP:
 https://drive.google.com/file/d/1bP3ArtJeI72D6GGqSi_3zjtthb6Gn1p2/view?usp=sharing
-
+Video demostrativo - Firebase:
+https://drive.google.com/file/d/1sjXk25bT0JWe_1eZjbtFOQa5e5joDdX4/view?usp=sharing
