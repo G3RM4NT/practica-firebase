@@ -24,6 +24,11 @@ const AddPerfil = ({ navigation }) => {
   const goToHome = () => {
     navigation.goBack();
   };
+  
+  const gotoLogin = () => 
+    {
+      navigation.navigate('Login');
+  }
 
   const agregarPerfil = async () => {
     const { correo, contrasena, ...restoPerfil } = perfil;
@@ -108,7 +113,7 @@ const AddPerfil = ({ navigation }) => {
         <Text style={styles.buttonText}>Registrarme</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={goToHome}>
+      <TouchableOpacity style={styles.button} onPress={gotoLogin}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
     </View>

@@ -1,91 +1,126 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from 'react-native';
 import { database } from '../config/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 
 const EditarPerfil = ({ route, navigation }) => {
-    const { perfil } = route.params;
+  const { perfil } = route.params;
 
-    const [form, setForm] = useState({
-        nombre: perfil.nombre,
-        correo: perfil.correo,
-        contrasena: perfil.contrasena,
-        titulo: perfil.titulo,
-        anioGraduacion: perfil.anioGraduacion,
-    });
+  // Usamos solo los campos editables (evitamos correo y contraseña si no se modifican aquí)
+  const [form, setForm] = useState({
+    nombre: perfil.nombre || '',
+    titulo: perfil.titulo || '',
+    anioGraduacion: perfil.anioGraduacion || '',
+  });
 
-    const handleUpdate = async () => {
-        try {
-            const ref = doc(database, 'usuarios', perfil.id);
-            await updateDoc(ref, form);
+  const handleUpdate = async () => {
+    if (!form.nombre || !form.titulo || !form.anioGraduacion) {
+      Alert.alert('Campos incompletos', 'Por favor completa todos los campos.');
+      return;
+    }
 
-            Alert.alert('Perfil actualizado', 'Cambios guardados', [
-                { text: 'OK', onPress: () => navigation.goBack() },
-            ]);
-        } catch (error) {
-            console.error('Error actualizando perfil', error);
-            Alert.alert('Error', 'No se pudo actualizar el perfil.');
-        }
-    };
+    try {
+      const ref = doc(database, 'usuarios', perfil.id);
+      await updateDoc(ref, {
+        nombre: form.nombre,
+        titulo: form.titulo,
+        anioGraduacion: form.anioGraduacion,
+      });
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Editar Perfil</Text>
+      Alert.alert('Perfil actualizado', 'Los cambios se guardaron correctamente.', [
+        { text: 'OK', onPress: () => navigation.goBack() },
+      ]);
+    } catch (error) {
+      console.error('Error actualizando perfil:', error);
+      Alert.alert('Error', 'No se pudo actualizar el perfil. Verifica tu conexión o ID del documento.');
+    }
+  };
 
-            {Object.entries(form).map(([key, value]) => (
-                <View key={key} style={styles.inputContainer}>
-                    <Text style={styles.label}>{key}:</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={value}
-                        onChangeText={(text) => setForm({ ...form, [key]: text })}
-                    />
-                </View>
-            ))}
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Editar Perfil</Text>
 
-            <TouchableOpacity style={styles.button} onPress={handleUpdate}>
-                <Text style={styles.buttonText}>Guardar Cambios</Text>
-            </TouchableOpacity>
-        </View>
-    );
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Nombre:</Text>
+        <TextInput
+          style={styles.input}
+          value={form.nombre}
+          onChangeText={(text) => setForm({ ...form, nombre: text })}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Título universitario:</Text>
+        <TextInput
+          style={styles.input}
+          value={form.titulo}
+          onChangeText={(text) => setForm({ ...form, titulo: text })}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Año de graduación:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={form.anioGraduacion}
+          onChangeText={(text) => setForm({ ...form, anioGraduacion: text })}
+        />
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+        <Text style={styles.buttonText}>Guardar Cambios</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
 };
 
 export default EditarPerfil;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    inputContainer: {
-        marginBottom: 15,
-    },
-    label: {
-        fontSize: 16,
-        marginBottom: 5,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        borderRadius: 5,
-    },
-    button: {
-        backgroundColor: '#0288d1',
-        padding: 15,
-        borderRadius: 5,
-        marginTop: 20,
-    },
-    buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
+  container: {
+    padding: 20,
+    backgroundColor: '#fff',
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#f9f9f9',
+  },
+  button: {
+    backgroundColor: '#0288d1',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
