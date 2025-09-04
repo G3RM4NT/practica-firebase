@@ -1,5 +1,3 @@
-﻿# react-native-firebase# Practica Firebase
-
 ## Autores
 
 - **Alessandro Imanol Ramírez Morán** (20230065)
@@ -25,3 +23,4 @@ Este proyecto utiliza las siguientes dependencias:
 
 Video demostrativo:
 https://drive.google.com/file/d/1bP3ArtJeI72D6GGqSi_3zjtthb6Gn1p2/view?usp=sharing
+
